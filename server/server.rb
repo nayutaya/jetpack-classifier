@@ -1,3 +1,4 @@
+#! ruby -Ku
 
 require "rubygems"
 require "sinatra"
@@ -6,7 +7,7 @@ require "activesupport"
 require "naive_bayes_categorizer"
 
 thresholds = {
-  "a" => 1.0,
+  "a" => 0.5,
   "b" => 3.5,
 }
 
@@ -18,7 +19,8 @@ process = proc { |records|
     title = record["title"].strip
     unless title.empty?
       category = categorizer.categorize(title, thresholds) || "unknown"
-      record["visible"] = (category == "a")
+      record["visible"] = (category == "a") || (category == "unknown")
+      p [title, category]
     end
   }
   records
