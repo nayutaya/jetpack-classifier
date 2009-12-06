@@ -1,12 +1,15 @@
 
 require "rubygems"
 require "sinatra"
+require "json"
 
 get "/" do
   ""
 end
 
 post "/" do
-  content_type("application/json")
-  "{foo: 'bar'}"
+  data = params[:data]
+  result = {1 => data}
+  content_type :json
+  JSON.unparse(result)
 end
