@@ -4,7 +4,7 @@ require "rubygems"
 require "sinatra"
 require "activesupport"
 
-if true
+if false
   require "naive_bayes_categorizer"
   tokenizer   = BigramTokenizer.new
   categorizer = NaiveBayesCategorizer.load(tokenizer, "bayes.db")
@@ -21,9 +21,12 @@ process = proc { |records|
     title = record["title"].strip
     unless title.empty?
       category = categorizer.categorize(title, thresholds) || "unknown"
-      record["visible"] = (category == "a") || (category == "unknown")
-      p [title, category]
+      visible = (category == "a") || (category == "unknown")
+      p [visible, title]
+    else
+      visible = false
     end
+    record["visible"] = visible
   }
   records
 }
