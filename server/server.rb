@@ -4,15 +4,17 @@ require "rubygems"
 require "sinatra"
 require "activesupport"
 
-require "naive_bayes_categorizer"
-
-thresholds = {
-  "a" => 0.5,
-  "b" => 3.5,
-}
-
-tokenizer   = BigramTokenizer.new
-categorizer = NaiveBayesCategorizer.load(tokenizer, "bayes.db")
+if true
+  require "naive_bayes_categorizer"
+  tokenizer   = BigramTokenizer.new
+  categorizer = NaiveBayesCategorizer.load(tokenizer, "bayes.db")
+  thresholds  = {"a" => 0.5, "b" => 3.5}
+else
+  require "mlp_categorizer"
+  tokenizer   = BigramTokenizer.new
+  categorizer = MlpCategorizer.load(tokenizer, "mlp.db")
+  thresholds  = {"a" => 0.1, "b" => 0.3}
+end
 
 process = proc { |records|
   records.each { |record|
