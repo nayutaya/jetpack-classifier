@@ -17,9 +17,7 @@ jetpack.tabs.onReady(function() {
         success: function(data) {
             jetpack.notifications.show("success");
             $(data, doc).each( function() {
-                if( !this.visible) {
-                    $(doc).find("a[href=" + this.url + "]").css("color", "#DDDDDD");
-                }
+                $(doc).find("a[href=" + this.url + "]").css("font-size", this.visible ? "150%" : "50%");
             });
             },
         error: function(res) {
