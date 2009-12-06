@@ -1,5 +1,7 @@
-jetpack.tabs.onReady(function() {
-    var doc = jetpack.tabs.focused.contentDocument;
+jetpack.tabs.onReady(function(doc) {
+    if (doc.defaultView.frameElement) {
+        return;
+    }
     var elements = [];
     $(doc).find("a").each(function() {
         var url = $(this).attr("href");
@@ -15,6 +17,9 @@ jetpack.tabs.onReady(function() {
         data: {data: uneval(elements)},
         success: function(data) {
                $(data, doc).each( function() {
+//                    if (this.visible) {
+//                        $(doc).find("a[href=" + this.url + "]").wrap("<marquee></marquee>");
+//                    }
                 $(doc).find("a[href=" + this.url + "]").css("font-size", this.visible ? "150%" : "50%");
             });
             },
