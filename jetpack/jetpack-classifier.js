@@ -1,7 +1,6 @@
 jetpack.tabs.onReady(function() {
     var doc = jetpack.tabs.focused.contentDocument;
     var elements = [];
-    jetpack.notifications.show("preparing");
     $(doc).find("a").each(function() {
         var url = $(this).attr("href");
         var title = $(this).text();
@@ -9,19 +8,21 @@ jetpack.tabs.onReady(function() {
             elements.push({ url: url, title: title});
         }
     });
-    jetpack.notifications.show("loading");
+    $(doc).find("a").css({"background-image": 'url("http://wedictionary.appspot.com/image/ajax.gif")', "background-repeat": 'no-repeat'});
     $.ajax({
         type: "POST",
         url:  "http://192.168.1.33:4567/",
         data: {data: uneval(elements)},
         success: function(data) {
-            jetpack.notifications.show("success");
-            $(data, doc).each( function() {
+               $(data, doc).each( function() {
                 $(doc).find("a[href=" + this.url + "]").css("font-size", this.visible ? "150%" : "50%");
             });
             },
         error: function(res) {
             jetpack.notifications.show("error");
+        },
+        complete: function() {
+            $(doc).find("a").css('background-image', 'none');
         },
         dataType: 'json'
     });
