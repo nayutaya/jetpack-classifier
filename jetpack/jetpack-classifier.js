@@ -8,6 +8,23 @@ jetpack.tabs.onReady(function() {
             elements.push({ url: url, title: title});
         }
     });
+
+    // XXX: mock
+    $.extend({
+        ajax: function(args) {
+            var elements = [];
+                $(doc).find("a").each(function() {
+                    var url = $(this).attr("href");
+                    var title = $(this).text();
+                    if (typeof(title) == "string" && title.length > 0 ) {
+                        elements.push({ url: url, title: title, visible: (Math.random() > 0.5)});
+                    }
+                });
+                args.success(elements);
+            }
+        }
+    );
+
     $.ajax({
         type: "POST",
         url:  "http://localhost/",
