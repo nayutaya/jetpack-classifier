@@ -1,7 +1,7 @@
 
 require "rubygems"
 require "sinatra"
-require "json"
+require "activesupport"
 
 require "naive_bayes_categorizer"
 
@@ -26,10 +26,10 @@ process = proc { |records|
 
 get "/" do
   content_type :json
-  JSON.unparse(process[JSON.parse(params[:data])])
+  ActiveSupport::JSON.encode(process[ActiveSupport::JSON.decode(params[:data])])
 end
 
 post "/" do
   content_type :json
-  JSON.unparse(process[JSON.parse(params[:data])])
+  ActiveSupport::JSON.encode(process[ActiveSupport::JSON.decode(params[:data])])
 end
