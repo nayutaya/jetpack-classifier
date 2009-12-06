@@ -14,8 +14,8 @@ jetpack.tabs.onReady(function() {
         data: {data: uneval(elements)},
         success: function(data) {
             $(data, doc).each( function() {
-                if( !$(this).match ) {
-                    $(doc).find("a[href=" + $(this).url + "]:contais(" + $(this).title + ")").css("visible", false);
+                if( !this.visible) {
+                    $(doc).find("a[href=" + this.url + "]").css("visibility", "hidden");
                 }
             });
             },
