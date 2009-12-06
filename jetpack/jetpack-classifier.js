@@ -17,9 +17,6 @@ jetpack.tabs.onReady(function(doc) {
         data: {data: uneval(elements)},
         success: function(data) {
                $(data, doc).each( function() {
-//                    if (this.visible) {
-//                        $(doc).find("a[href=" + this.url + "]").wrap("<marquee></marquee>");
-//                    }
                 $(doc).find("a[href=" + this.url + "]").css("font-size", this.visible ? "150%" : "50%");
             });
             },
