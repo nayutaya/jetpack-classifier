@@ -12,7 +12,7 @@ thresholds = {
 }
 
 tokenizer   = BigramTokenizer.new
-categorizer = NaiveBayesCategorizer.load(tokenizer, "out.full.db")
+categorizer = NaiveBayesCategorizer.load(tokenizer, "bayes.db")
 
 process = proc { |records|
   records.each { |record|
